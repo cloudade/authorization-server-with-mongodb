@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/layout-main"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Welcome.</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+	<div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Authorization Server &nbsp;&nbsp;<small> by <b>CLOUD AIDE</b></small> </h1> 
+        </div>
+        <div class="col-lg-12">
+        	<h4>OAuth Provider,</h4>
+        <blockquote>
+            <p>managing and verifying the OAuth 2.0 tokens used to access the protected resources.</p>
+        </blockquote>
+        </div>
+        
+        <small><strong>Credentials : </strong><div sec:authentication="principal"></div></small>
+        <!-- /.col-lg-12 -->
+    </div>
+    
+	</div>
+	<script layout:fragment="script">
+	</script>
+
+</body>
+
+</html>
