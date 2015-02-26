@@ -1,25 +1,27 @@
 package cloudade.server.auth.mongo.info.repositories;
 
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Update.update;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import cloudade.server.auth.mongo.user.domain.User;
-
-import com.mongodb.WriteResult;
+import cloudade.server.auth.mongo.info.domain.ServerInfo;
 
 @Component
 public class ServerInfoRepositoryImpl implements ServerInfoRepositoryBase {
-	
 
-    private final MongoTemplate mongoTemplate;
+	private final MongoTemplate mongoTemplate;
 
-    @Autowired
-    public ServerInfoRepositoryImpl(final MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
+	@Autowired
+	public ServerInfoRepositoryImpl(final MongoTemplate mongoTemplate) {
+		this.mongoTemplate = mongoTemplate;
+	}
+
+	@Override
+	public ServerInfo findByUniqueKeys(String host, String port) {
+		final Query query = Query.query(Criteria.where("host").is(host)
+				.andOperator(Criteria.where("port").is(port)));
+		return mongoTemplate.findOne(query, ServerInfo.class);
+	}
 }

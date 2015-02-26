@@ -11,16 +11,24 @@ public class ServerInfo {
 
 	@Id
 	private String id;
+	private String host;
+	private String port;
 	private String pid;
-	private String version;
+	private String springBootVersion;
+	private String appVersion;
 	private LocalDate lastStartedAt;
 	private LocalDate firstStartedAt;
 
-	public ServerInfo(final String id, final String pid, final String version,
-			final LocalDate lastStartedAt, final LocalDate firstStartedAt) {
+	public ServerInfo(final String id, final String host, final String port,
+			final String pid, final String springBootVersion,
+			final String appVersion, final LocalDate lastStartedAt,
+			final LocalDate firstStartedAt) {
 		this.id = id;
+		this.host = host;
+		this.port = port;
 		this.pid = pid;
-		this.version = version;
+		this.springBootVersion = springBootVersion;
+		this.appVersion = appVersion;
 		this.lastStartedAt = lastStartedAt;
 		this.firstStartedAt = firstStartedAt;
 	}
@@ -41,12 +49,36 @@ public class ServerInfo {
 		this.pid = pid;
 	}
 
-	public String getVersion() {
-		return version;
+	public String getHost() {
+		return host;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
+	}
+
+	public String getSpringBootVersion() {
+		return springBootVersion;
+	}
+
+	public void setSpringBootVersion(String springBootVersion) {
+		this.springBootVersion = springBootVersion;
+	}
+
+	public String getAppVersion() {
+		return appVersion;
+	}
+
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
 	}
 
 	public LocalDate getLastStartedAt() {
@@ -67,7 +99,7 @@ public class ServerInfo {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, pid, version, lastStartedAt, firstStartedAt);
+		return Objects.hash(pid, host, port, springBootVersion, appVersion, lastStartedAt, firstStartedAt);
 	}
 
 	@Override
@@ -79,9 +111,11 @@ public class ServerInfo {
 			return false;
 		}
 		final ServerInfo other = (ServerInfo) obj;
-		return Objects.equals(this.id, other.id)
+		return Objects.equals(this.host, other.host)
+				&& Objects.equals(this.port, other.port)
 				&& Objects.equals(this.pid, other.pid)
-				&& Objects.equals(this.version, other.version)
+				&& Objects.equals(this.springBootVersion, other.springBootVersion)
+				&& Objects.equals(this.appVersion, other.appVersion)
 				&& Objects.equals(this.lastStartedAt, other.lastStartedAt)
 				&& Objects.equals(this.firstStartedAt, other.firstStartedAt);
 	}
@@ -89,7 +123,8 @@ public class ServerInfo {
 	@Override
 	public String toString() {
 		return "ServerInfo{" + "id='" + id + '\'' + ", pid='" + pid + '\''
-				+ ", version='" + version + '\'' + ", lastStartedAt='"
+				+ ", host='" + host + '\''+ ", port='" + port + '\'' + ", springBootVersion='" +springBootVersion + '\''
+				+ ", appVersion='" + appVersion + '\'' + ", lastStartedAt='"
 				+ lastStartedAt + '\'' + ", firstStartedAt=" + firstStartedAt
 				+ '}';
 	}
