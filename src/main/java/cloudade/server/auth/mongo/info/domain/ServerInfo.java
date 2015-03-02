@@ -14,19 +14,21 @@ public class ServerInfo {
 	private String host;
 	private String port;
 	private String pid;
+	private String appName;
 	private String springBootVersion;
 	private String appVersion;
 	private LocalDate lastStartedAt;
 	private LocalDate firstStartedAt;
 
 	public ServerInfo(final String id, final String host, final String port,
-			final String pid, final String springBootVersion,
+			final String pid, final String appName, final String springBootVersion,
 			final String appVersion, final LocalDate lastStartedAt,
 			final LocalDate firstStartedAt) {
 		this.id = id;
 		this.host = host;
 		this.port = port;
 		this.pid = pid;
+		this.appName = appName;
 		this.springBootVersion = springBootVersion;
 		this.appVersion = appVersion;
 		this.lastStartedAt = lastStartedAt;
@@ -51,6 +53,14 @@ public class ServerInfo {
 
 	public String getHost() {
 		return host;
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 
 	public void setHost(String host) {
@@ -99,7 +109,7 @@ public class ServerInfo {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(pid, host, port, springBootVersion, appVersion, lastStartedAt, firstStartedAt);
+		return Objects.hash(pid, host, port, appName, springBootVersion, appVersion, lastStartedAt, firstStartedAt);
 	}
 
 	@Override
@@ -114,6 +124,7 @@ public class ServerInfo {
 		return Objects.equals(this.host, other.host)
 				&& Objects.equals(this.port, other.port)
 				&& Objects.equals(this.pid, other.pid)
+				&& Objects.equals(this.appName, other.appName)
 				&& Objects.equals(this.springBootVersion, other.springBootVersion)
 				&& Objects.equals(this.appVersion, other.appVersion)
 				&& Objects.equals(this.lastStartedAt, other.lastStartedAt)
@@ -122,7 +133,7 @@ public class ServerInfo {
 
 	@Override
 	public String toString() {
-		return "ServerInfo{" + "id='" + id + '\'' + ", pid='" + pid + '\''
+		return "ServerInfo{" + "id='" + id + '\'' + ", pid='" + pid + '\'' + ", appName='" + appName + '\''
 				+ ", host='" + host + '\''+ ", port='" + port + '\'' + ", springBootVersion='" +springBootVersion + '\''
 				+ ", appVersion='" + appVersion + '\'' + ", lastStartedAt='"
 				+ lastStartedAt + '\'' + ", firstStartedAt=" + firstStartedAt

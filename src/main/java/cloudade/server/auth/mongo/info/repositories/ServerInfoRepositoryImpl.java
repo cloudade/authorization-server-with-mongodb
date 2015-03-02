@@ -1,5 +1,7 @@
 package cloudade.server.auth.mongo.info.repositories;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -24,4 +26,11 @@ public class ServerInfoRepositoryImpl implements ServerInfoRepositoryBase {
 				.andOperator(Criteria.where("port").is(port)));
 		return mongoTemplate.findOne(query, ServerInfo.class);
 	}
+
+	@Override
+	public List<ServerInfo> findByAppName(String appName) {
+		final Query query = Query.query(Criteria.where("appName").is(appName));
+		return mongoTemplate.find(query, ServerInfo.class);
+	}
+	
 }

@@ -3,6 +3,7 @@ package cloudade.server.auth.mongo.info;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,25 +29,31 @@ public class ServerInfoService {
 
 	@Value("${server.port}")
 	private int port;
+	
+	@Value("${spring.application.name}")
+	private String appName;
 
-	public ServerInfo saveServerInfo() throws UnknownHostException {
+	public ServerInfo saveServerInfo() throws UnknownHostException{
+		return saveServerInfo(getServerInfo());
+	}
+	
+	public ServerInfo saveServerInfo(ServerInfo serverInfo) throws UnknownHostException {
 
 		String jvmName = ManagementFactory.getRuntimeMXBean().getName();
 		String host = InetAddress.getLocalHost().getHostName();
 		String springBootVersion = Banner.class.getPackage().getImplementationVersion();
 		String appVersion = getClass().getPackage().getImplementationTitle();
 		
-		ServerInfo beforeServerInfo = getServerInfo();
-		if (beforeServerInfo != null) {
-			beforeServerInfo.setSpringBootVersion(springBootVersion);
-			beforeServerInfo.setAppVersion(appVersion);
-			beforeServerInfo.setPid(jvmName.split("@")[0]);
+		if (serverInfo != null) {
+			serverInfo.setSpringBootVersion(springBootVersion);
+			serverInfo.setAppVersion(appVersion);
+			serverInfo.setPid(jvmName.split("@")[0]);
 			
-			serverInfoRepository.save(beforeServerInfo);
-			return beforeServerInfo;
+			serverInfoRepository.save(serverInfo);
+			return serverInfo;
 		} else {
-			ServerInfo serverInfo = new ServerInfo(null, host, port + "",
-					jvmName.split("@")[0], springBootVersion, appVersion, null, null);
+			serverInfo = new ServerInfo(null, host, port + "",
+					jvmName.split("@")[0], appName, springBootVersion, appVersion, null, null);
 			serverInfoRepository.save(serverInfo);
 			return serverInfo;
 		}
@@ -54,10 +61,12 @@ public class ServerInfoService {
 	}
 
 	public ServerInfo getServerInfo() throws UnknownHostException {
+		return serverInfoRepository.findByUniqueKeys(InetAddress.getLocalHost().getHostName(), "" + port);
 
-		return serverInfoRepository.findByUniqueKeys(InetAddress.getLocalHost()
-				.getHostName(), "" + port);
-
+	}
+	
+	public List<ServerInfo> getServerInfoByAppName() {
+		 return serverInfoRepository.findByAppName(appName);
 	}
 
 }
