@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
@@ -42,18 +43,19 @@ public class ServerInfoService {
 		String jvmName = ManagementFactory.getRuntimeMXBean().getName();
 		String host = InetAddress.getLocalHost().getHostName();
 		String springBootVersion = Banner.class.getPackage().getImplementationVersion();
-		String appVersion = getClass().getPackage().getImplementationTitle();
+		String appVersion = getClass().getPackage().getImplementationVersion();
 		
 		if (serverInfo != null) {
 			serverInfo.setSpringBootVersion(springBootVersion);
 			serverInfo.setAppVersion(appVersion);
 			serverInfo.setPid(jvmName.split("@")[0]);
+			serverInfo.setLastStartedAt( new LocalDate() );
 			
 			serverInfoRepository.save(serverInfo);
 			return serverInfo;
 		} else {
 			serverInfo = new ServerInfo(null, host, port + "",
-					jvmName.split("@")[0], appName, springBootVersion, appVersion, null, null);
+					jvmName.split("@")[0], appName, springBootVersion, appVersion, new LocalDate(), new LocalDate());
 			serverInfoRepository.save(serverInfo);
 			return serverInfo;
 		}

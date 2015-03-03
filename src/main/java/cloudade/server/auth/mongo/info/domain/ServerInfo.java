@@ -33,6 +33,7 @@ public class ServerInfo {
 		this.appVersion = appVersion;
 		this.lastStartedAt = lastStartedAt;
 		this.firstStartedAt = firstStartedAt;
+		
 	}
 
 	public String getId() {
