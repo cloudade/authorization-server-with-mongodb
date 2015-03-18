@@ -1,5 +1,6 @@
 package cloudade.server.auth.mongo.info;
 
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -38,10 +39,20 @@ public class ServerInfoService {
 		return saveServerInfo(getServerInfo());
 	}
 	
-	public ServerInfo saveServerInfo(ServerInfo serverInfo) throws UnknownHostException {
+	public ServerInfo saveServerInfo(ServerInfo serverInfo) throws UnknownHostException{
 
 		String jvmName = ManagementFactory.getRuntimeMXBean().getName();
-		String host = InetAddress.getLocalHost().getHostName();
+		String host;
+		try {
+			host = InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			try {
+				host = Runtime.getRuntime().exec("hostname").toString();
+			} catch (IOException e1) {
+				host = InetAddress.getLocalHost().toString();
+			}
+		}
+		
 		String springBootVersion = Banner.class.getPackage().getImplementationVersion();
 		String appVersion = getClass().getPackage().getImplementationVersion();
 		
