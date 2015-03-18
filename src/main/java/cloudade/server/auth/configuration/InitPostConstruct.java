@@ -1,5 +1,6 @@
 package cloudade.server.auth.configuration;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class InitPostConstruct {
 
 
 	@PostConstruct
-	public void init() throws UnknownHostException{
+	public void init() throws IOException {
 
 		// debug for bean definition names
 		String[] beanNames = context.getBeanDefinitionNames();
