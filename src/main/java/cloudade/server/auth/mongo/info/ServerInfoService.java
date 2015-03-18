@@ -1,6 +1,8 @@
 package cloudade.server.auth.mongo.info;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -47,7 +49,15 @@ public class ServerInfoService {
 			host = InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException e) {
 			try {
-				host = Runtime.getRuntime().exec("hostname").toString();
+				Process p  = Runtime.getRuntime().exec("hostname");
+				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			    String line = null;
+			    StringBuffer sBuf = new StringBuffer();
+			    while((line = br.readLine()) != null){
+			    	sBuf.append(line);
+			    	System.out.println(sBuf.toString());
+			    }
+			    host = sBuf.toString();
 			} catch (IOException e1) {
 				host = InetAddress.getLocalHost().toString();
 			}
