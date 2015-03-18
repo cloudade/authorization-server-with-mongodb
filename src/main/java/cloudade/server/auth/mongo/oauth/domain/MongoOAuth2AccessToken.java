@@ -10,6 +10,7 @@ import java.util.Objects;
 public class MongoOAuth2AccessToken {
 
     @Id
+    private final String id;
     private final String tokenId;
     private final byte[] token;
     private final String authenticationId;
@@ -25,6 +26,7 @@ public class MongoOAuth2AccessToken {
                                   final String clientId,
                                   final byte[] authentication,
                                   final String refreshToken) {
+    	this.id = tokenId;
         this.tokenId = tokenId;
         this.token = token;
         this.authenticationId = authenticationId;
@@ -34,7 +36,11 @@ public class MongoOAuth2AccessToken {
         this.refreshToken = refreshToken;
     }
 
-    public String getTokenId() {
+    public String getId() {
+		return id;
+	}
+
+	public String getTokenId() {
         return tokenId;
     }
 
