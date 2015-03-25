@@ -7,9 +7,9 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 
 import java.util.*;
 
-@Document
+@Document(collection="client_details")
 public class MongoClientDetails implements ClientDetails {
-
+ 
     @Id
     private String clientId;
     private String clientSecret;

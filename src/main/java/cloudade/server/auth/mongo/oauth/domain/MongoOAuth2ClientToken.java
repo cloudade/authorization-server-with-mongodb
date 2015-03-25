@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Document
+@Document(collection="oauth2_client_tokens")
 public class MongoOAuth2ClientToken {
 
     @Id

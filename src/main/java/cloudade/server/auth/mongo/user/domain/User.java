@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
-@Document
+@Document(collection="users")
 public class User implements UserDetails, CredentialsContainer {
 
     @Id

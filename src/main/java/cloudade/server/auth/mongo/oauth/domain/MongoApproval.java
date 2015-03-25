@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.provider.approval.Approval.ApprovalSt
 
 import java.util.Objects;
 
-@Document
+@Document(collection="approvals")
 public class MongoApproval {
 
     @Id

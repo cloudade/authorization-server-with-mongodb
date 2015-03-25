@@ -3,7 +3,7 @@ package cloudade.server.auth.mongo.oauth.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection="oauth2_refresh_tokens")
 public class MongoOAuth2RefreshToken {
 
     @Id
