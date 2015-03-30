@@ -32,7 +32,6 @@ public class MongoClientTokenServices implements ClientTokenServices {
     public OAuth2AccessToken getAccessToken(final OAuth2ProtectedResourceDetails resource,
                                             final Authentication authentication) {
         final MongoOAuth2ClientToken mongoOAuth2ClientToken = mongoOAuth2ClientTokenRepository.findByAuthenticationId(clientKeyGenerator.extractKey(resource, authentication));
-        System.out.println("getAccessToken mongoOAuth2ClientToken : "+mongoOAuth2ClientToken.getToken());
         return SerializationUtils.deserialize(mongoOAuth2ClientToken.getToken());
     }
 
@@ -48,7 +47,6 @@ public class MongoClientTokenServices implements ClientTokenServices {
                 authentication.getName(),
                 resource.getClientId());
         
-        System.out.println("saveAccessToken token : "+SerializationUtils.serialize(accessToken));
         mongoOAuth2ClientTokenRepository.save(mongoOAuth2ClientToken);
     }
 
